@@ -39,16 +39,20 @@ export function move(root: FSFolder, currentPosition: string, key: KeyboardEvent
     // Move up to the correct list of siblings.
     while (true) {
         const siblings = Array.from(current.parent?.children?.values() ?? []);
-        const currentIndex = siblings.indexOf(current);
-        if (currentIndex === 0 || currentIndex === siblings.length-1) {
+        const nextIndex = siblings.indexOf(current) + direction;
+        if (nextIndex === -1 || nextIndex === siblings.length) {
             if (current.parent === undefined) {
                 // Reached the root node, cannot move up or down.
                 return currentNode;
             }
+            if (nextIndex === -1) {
+                // The parent is rendered above the list of children.
+                return current.parent;
+            }
             current = current.parent;
             continue;
         }
-        nextCandidate = siblings[currentIndex + direction];
+        nextCandidate = siblings[nextIndex];
         break;
     }
 
