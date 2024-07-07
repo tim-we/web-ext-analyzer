@@ -26,6 +26,8 @@ const FolderContentView: FunctionComponent<FCVProps> = ({
   const [contents, setContents] = useState<FSNodeDTO[] | undefined>(undefined);
   const ulRef = useRef<HTMLUListElement>(null);
 
+  const isRoot = path === "/" || path === "";
+
   useEffect(() => {
     wrappedWorker.getDirectoryContents(extId, path).then(setContents, (e) => console.error(e));
   }, [extId, path]);
@@ -34,59 +36,19 @@ const FolderContentView: FunctionComponent<FCVProps> = ({
     return <span class="folder-content">...</span>;
   }
 
-  const selectionDirname = selectedPath === undefined ? undefined : paths.dirname(selectedPath);
   const folders = contents.filter((node) => node.type === "folder") as FolderDTO[];
   const files = contents.filter((node) => node.type === "file") as FileDTO[];
-  const isRoot = path === "/" || path === "";
-
-  const keydownListener = async (e: KeyboardEvent) => {
-    if (selectedPath === undefined) {
-      // No selection -> no selection change.
-      return;
-    }
-
-    if (!selectionDirname!.startsWith(path)) {
-      // Keyboard interaction not relevant for the current subtree.
-      return;
-    }
-
-    if (e.key !== "Enter" && e.key !== "ArrowDown" && e.key !== "ArrowUp") {
-      return;
-    }
-
-    // Prevent scrolling.
-    e.preventDefault();
-
-    // We check for prefix such that we can let the event bubble up and let the parent handle this.
-    const index = contents.findIndex((node) => selectedPath.startsWith(node.path));
-
-    if (index < 0) {
-      return;
-    }
-
-    if (e.key === "Enter") {
-      e.stopPropagation();
-      const node = contents[index];
-      if (node.type === "file") {
-        showFilePreview?.(node);
-      }
-      return;
-    }
-
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      const direction = e.key === "ArrowDown" ? 1 : -1;
-      const nextNode = contents[index + direction];
-      if (nextNode === undefined) {
-        // Next node not found (out of bounds), let parent handle this.
-        return;
-      }
-      e.stopPropagation();
-      selectFSNode?.(nextNode.path);
-      return;
-    }
-  };
 
   // TODO: listen to focus changes
+
+  const keydownHandler = async (e: KeyboardEvent) => {
+    // TODO check what selectedPath is
+    if (selectedPath === undefined || !selectFSNode) {
+      return;
+    }
+    const next = await wrappedWorker.changeFileSystemCursor(extId, selectedPath, e.key);
+    selectFSNode(next);
+  };
 
   const jsxContent = (
     <ul
@@ -94,8 +56,8 @@ const FolderContentView: FunctionComponent<FCVProps> = ({
       class="folder-content"
       role={isRoot ? "tree" : "group"}
       aria-label={isRoot ? label : undefined}
+      onKeyDown={isRoot ? keydownHandler : undefined}
       tabindex={0}
-      onKeyDown={keydownListener}
     >
       {folders.map((folder, i) => (
         <FolderView key={folder.name} node={folder} selectFSNode={selectFSNode} />
@@ -206,13 +168,6 @@ const FolderView: FunctionComponent<{ node: FolderDTO; selectFSNode?: FSNodeSele
       } else {
         selectFSNode?.(node.path);
       }
-    } else if (expanded && selected && (e.key === "ArrowRight" || e.key === "ArrowDown")) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      // Select first node in folder.
-      const folderContents = await wrappedWorker.getDirectoryContents(extId, node.path);
-      selectFSNode?.(folderContents[0].path);
     } else if (!expanded && e.key === "ArrowRight") {
       e.preventDefault();
       e.stopPropagation();

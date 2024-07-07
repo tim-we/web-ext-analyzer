@@ -7,10 +7,13 @@ export type FSNodeDTO = { name: string; size: string; path: string } & (
   | { type: "file"; tags: FileTypeTags[] }
 );
 
+const collator = new Intl.Collator("en");
+
 export abstract class FSNode {
+  abstract readonly type: "file"|"folder";
   readonly name: string;
   readonly absolutePath: string;
-  protected readonly parent: FSFolder | undefined;
+  readonly parent: FSFolder | undefined;
   protected byteSize = 0;
 
   constructor(name: string, parent?: FSFolder) {
@@ -50,6 +53,7 @@ export abstract class FSNode {
 }
 
 export class FSFile extends FSNode {
+  readonly type = "file";
   readonly #zipEntry: zip.Entry;
   readonly #references = new Set<FSFile>();
   readonly #usages = new Set<FSFile>();
@@ -97,6 +101,7 @@ export class FSFile extends FSNode {
 }
 
 export class FSFolder extends FSNode {
+  readonly type = "folder";
   readonly children = new Map<string, FSNode>();
   #files = 0;
 
@@ -185,6 +190,10 @@ export class FSFolder extends FSNode {
     return folder;
   }
 
+  getNode(path: string): FSNode | undefined {
+    return this.#getNodes(path)[0];
+  }
+
   countFiles(nameFilter: RegExp): number {
     let count = 0;
 
@@ -199,6 +208,32 @@ export class FSFolder extends FSNode {
     }
 
     return count;
+  }
+
+  /**
+   * Sort the subtree by node type and name.
+   */
+  sort() {
+    const children = Array.from(this.children.values()).sort((a,b) => {
+      if (a.type !== b.type) {
+        // Folders before files.
+        return a.type === "folder" ? -1 : 1;
+      }
+
+      return collator.compare(a.name, b.name);
+    });
+
+    // Maps keep elements in insertion order.
+    // To change the order we need to first clear the map.
+    this.children.clear();
+    children.forEach(node => this.children.set(node.name, node));
+
+    // Recurse.
+    for (const maybeFolder of children) {
+      if (maybeFolder instanceof FSFolder) {
+        maybeFolder.sort();
+      }
+    }
   }
 
   #getNodes(path: string): FSNode[] {
@@ -247,6 +282,7 @@ export class FSFolder extends FSNode {
   }
 }
 
+// TODO: move to separate file
 const knownFileExtensions: Record<string, FileTypeInfo> = {
   // JavaScript
   js: { tag: "code", mime: "text/javascript" },
@@ -307,6 +343,7 @@ export async function createFileSystem(
       : entry.filename;
     root.insertZipEntryAsFile(rootRelativePath, entry);
   }
+  root.sort();
   return root;
 }
 

@@ -7,10 +7,10 @@ import * as Comlink from "comlink";
 
 import Extension, { type PermissionsInfo } from "../extension/Extension";
 import Runner from "../runner/Runner";
+import * as FSCursor from "../extension/FSCursor";
 
 // TODO: consider dynamically importing this (code splitting)
 import { renderCode } from "../code-renderer/CodeRenderer";
-import { compareFSNodes } from "../utilities/fs-nodes";
 
 zip.configure({
   useWebWorkers: false // this is already a worker
@@ -68,10 +68,14 @@ const exposedMethods = {
       throw new Error(`Failed to get directory contents for "${path}"`);
     }
     const children = Array.from(folder.children.values())
-      .map((node) => node.asJSON())
-      .sort(compareFSNodes);
+      .map((node) => node.asJSON());
 
     return children;
+  },
+
+  changeFileSystemCursor(sessionId: string, currentNode: string, key: KeyboardEvent["key"]): string {
+    const extension = sessions.get(sessionId)!.extension!;
+    return FSCursor.move(extension.files, currentNode, key).asJSON().path;
   },
 
   async getPrettyCode(sessionId: string, path: string): Promise<HighlightedCode> {
