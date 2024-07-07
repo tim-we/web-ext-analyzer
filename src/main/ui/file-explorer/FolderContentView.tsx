@@ -132,7 +132,6 @@ const FolderView: FunctionComponent<{ node: FolderDTO; selectFSNode?: FSNodeSele
   const selectedPath = useContext(SelectedFSNodeContext);
   const labelId = useId();
   const liRef = useRef<HTMLLIElement>(null);
-  const extId = useContext(ExtensionIdContext)!;
 
   const selected = selectedPath === node.path;
 
@@ -140,8 +139,18 @@ const FolderView: FunctionComponent<{ node: FolderDTO; selectFSNode?: FSNodeSele
     if (selected) {
       liRef.current!.querySelector("summary")!.focus();
       scrollIntoViewIfNeeded(liRef.current!);
-    }
+    } 
   }, [selected, liRef.current]);
+
+  useEffect(() => {
+    if (expanded || !selectedPath || !selectFSNode) {
+      return;
+    }
+    if (selectedPath.startsWith(node.path)) {
+      // Folder is closed and new selection is somewhere inside.
+      selectFSNode(node.path);
+    }
+  }, [selectedPath, node.path, expanded, selectFSNode]);
 
   const summaryClickHandler = (e: MouseEvent) => {
     e.preventDefault();
