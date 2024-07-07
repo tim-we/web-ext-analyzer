@@ -10,7 +10,7 @@ export type FSNodeDTO = { name: string; size: string; path: string } & (
 const collator = new Intl.Collator("en");
 
 export abstract class FSNode {
-  abstract readonly type: "file"|"folder";
+  abstract readonly type: "file" | "folder";
   readonly name: string;
   readonly absolutePath: string;
   readonly parent: FSFolder | undefined;
@@ -214,7 +214,7 @@ export class FSFolder extends FSNode {
    * Sort the subtree by node type and name.
    */
   sort() {
-    const children = Array.from(this.children.values()).sort((a,b) => {
+    const children = Array.from(this.children.values()).sort((a, b) => {
       if (a.type !== b.type) {
         // Folders before files.
         return a.type === "folder" ? -1 : 1;
@@ -226,7 +226,7 @@ export class FSFolder extends FSNode {
     // Maps keep elements in insertion order.
     // To change the order we need to first clear the map.
     this.children.clear();
-    children.forEach(node => this.children.set(node.name, node));
+    children.forEach((node) => this.children.set(node.name, node));
 
     // Recurse.
     for (const maybeFolder of children) {

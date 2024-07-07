@@ -4,13 +4,13 @@ import type { FSNodeDTO } from "../../../extension/FileSystem";
 import { createContext } from "preact";
 import { useContext, useEffect, useId, useRef, useState } from "preact/hooks";
 
+import { scrollIntoViewIfNeeded } from "../../../utilities/dom";
 import * as paths from "../../../utilities/paths";
 import wrappedWorker from "../../MainWorkerRef";
 import { openCodeViewer } from "../code-viewer/CodeViewer";
 import ExtensionIdContext from "../contexts/ExtensionIdContext";
 import SelectedFSNodeContext from "../contexts/SelectedFSNodeContext";
 import TagList from "./TagList";
-import { scrollIntoViewIfNeeded } from "../../../utilities/dom";
 
 const noop = () => undefined;
 const FSHContext = createContext<FSNodeSelectionHandler>(noop);
@@ -139,7 +139,7 @@ const FolderView: FunctionComponent<{ node: FolderDTO; selectFSNode?: FSNodeSele
     if (selected) {
       liRef.current!.querySelector("summary")!.focus();
       scrollIntoViewIfNeeded(liRef.current!);
-    } 
+    }
   }, [selected, liRef.current]);
 
   useEffect(() => {
