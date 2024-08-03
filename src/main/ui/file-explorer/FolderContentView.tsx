@@ -46,6 +46,7 @@ const FolderContentView: FunctionComponent<FCVProps> = ({
     if (selectedPath === undefined || !selectFSNode) {
       return;
     }
+    e.preventDefault();
     const next = await wrappedWorker.changeFileSystemCursor(extId, selectedPath, e.key);
     selectFSNode(next);
   };
