@@ -1,6 +1,5 @@
-import type * as zip from "@zip.js/zip.js";
 import { expect, test } from "vitest";
-import { type FSFolder, createFileSystem } from "./FileSystem";
+import { createTestFS } from "../utilities/test/fs-test-utils";
 
 test("insertion smoke test", async () => {
   const fs = await createTestFS(["/a/b/file1.txt", "/a/b/file2.txt", "/manifest.json"]);
@@ -32,25 +31,3 @@ test("folder contents should be sorted", async () => {
   expect(children[0].name).toBe("a.txt");
   expect(children[3].name).toBe("d.txt");
 });
-
-export async function createTestFS(filePaths: string[]): Promise<FSFolder> {
-  const generator = async function* () {
-    for (const file of filePaths) {
-      yield createFakeZipEntry(file);
-    }
-    return false;
-  };
-
-  return await createFileSystem(generator());
-}
-
-function createFakeZipEntry(path: string): zip.Entry {
-  return {
-    filename: path, // TODO: use basename?
-    filenameUTF8: true,
-    directory: false,
-    compressedSize: 0,
-    uncompressedSize: 0,
-    encrypted: false
-  } as unknown as zip.Entry;
-}

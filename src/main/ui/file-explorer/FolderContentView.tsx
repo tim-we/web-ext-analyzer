@@ -102,7 +102,7 @@ const FileView: FunctionComponent<{ node: FileDTO }> = ({ node }) => {
       document.getElementById(labelId)!.focus();
       scrollIntoViewIfNeeded(liRef.current!);
     }
-  }, [selected, liRef.current]);
+  }, [selected, liRef.current, labelId]);
 
   return (
     <li
