@@ -32,4 +32,9 @@ export type ExtensionData = {
     jsType?: "classic" | "module" | "mixed";
     background: boolean;
   };
+
+  translations: {
+    languages: string[];
+    strings: number;
+  };
 };

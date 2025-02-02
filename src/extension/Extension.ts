@@ -110,6 +110,10 @@ export default class Extension {
         supported: Runner.supports(this),
         background: backgroundScripts,
         jsType: Runner.supports(this) ? "classic" : undefined
+      },
+      translations: {
+        languages: [], // TODO
+        strings: 0
       }
     };
   }

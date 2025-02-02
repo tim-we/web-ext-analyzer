@@ -12,6 +12,7 @@ import ExtensionColorContext from "../contexts/ExtensionColorContext";
 import ExtensionIdContext from "../contexts/ExtensionIdContext";
 import "../main-section.css";
 import "./extension.css";
+import TranslationsTile from "../tiles/TranslationsTile";
 
 type Props = {
   data: ExtensionData;
@@ -48,6 +49,7 @@ const ExtensionView: FunctionComponent<Props> = ({ data, collapse }) => {
             <MetaTile {...data.meta} />
             <PermissionsTile {...data.permissions} />
             <FilesTile {...data.files} />
+            <TranslationsTile {...data.translations} />
             <DynamicAnalysisTile {...data.dynamicAnalysis} />
           </div>
         </details>
