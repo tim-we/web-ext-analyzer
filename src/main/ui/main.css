@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "./common.scss";
+@import "./variables.css";
+@import "./common.css";
 
 :root {
   font-family: sans-serif;
@@ -17,7 +17,7 @@ body {
 }
 
 body > header {
-  padding: $base-offset;
+  padding: var(--base-offset);
 
   h1 {
     font-size: 22px;
@@ -55,7 +55,7 @@ body > header {
 }
 
 footer {
-  margin: $base-offset;
+  margin: var(--base-offset);
   text-align: center;
 
   > a,

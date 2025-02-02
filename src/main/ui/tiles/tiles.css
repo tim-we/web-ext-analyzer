@@ -1,9 +1,9 @@
-@import "../variables.scss";
+@import "../variables.css";
 
 .tile {
   position: relative;
   box-sizing: border-box;
-  padding: $base-offset;
+  padding: var(--base-offset);
   min-height: 150px;
   min-width: 250px;
   max-width: 320px;
@@ -22,7 +22,7 @@
 
   > h3 {
     margin: 0;
-    margin-bottom: $base-offset;
+    margin-bottom: var(--base-offset);
     font-size: 0.85rem;
     font-family: sans-serif;
     font-weight: bold;

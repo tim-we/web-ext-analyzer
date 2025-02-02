@@ -10,8 +10,8 @@ import { useState } from "preact/hooks";
 import { startUserDownload } from "../../../utilities/download";
 import ExtensionColorContext from "../contexts/ExtensionColorContext";
 import ExtensionIdContext from "../contexts/ExtensionIdContext";
-import "../main-section.scss";
-import "./extension.scss";
+import "../main-section.css";
+import "./extension.css";
 
 type Props = {
   data: ExtensionData;

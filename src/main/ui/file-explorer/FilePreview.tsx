@@ -7,7 +7,7 @@ import ExtensionIdContext from "../contexts/ExtensionIdContext";
 import TagList from "./TagList";
 
 import ActionButton from "../common/ActionButton";
-import "./file-preview.scss";
+import "./file-preview.css";
 
 const closeAnimationKeyframes: Keyframe[] = [
   { opacity: 1, transform: "translateX(0)" },

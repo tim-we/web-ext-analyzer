@@ -1,4 +1,4 @@
-@import "../variables.scss";
+@import "../variables.css";
 
 .file-explorer {
   position: absolute;
@@ -13,7 +13,7 @@
     flex-grow: 1;
     min-width: 50%;
     box-sizing: border-box;
-    padding: $base-offset;
+    padding: var(--base-offset);
     overflow: auto;
     scrollbar-width: thin;
   }
@@ -118,7 +118,7 @@
   }
 
   & > ul {
-    // Only indent child content.
+    /* Only indent child content. */
     padding-left: 0;
   }
 

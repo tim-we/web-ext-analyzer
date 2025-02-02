@@ -3,7 +3,7 @@ import type { ComponentChildren, FunctionComponent } from "preact";
 import * as Preact from "preact";
 import type { ExtensionData } from "../../../extension/types/ExtensionData";
 
-import "./modal-window.scss";
+import "./modal-window.css";
 import { useRef } from "preact/hooks";
 
 export const modalRoot = document.createElement("div");

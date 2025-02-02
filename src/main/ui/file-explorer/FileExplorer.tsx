@@ -7,7 +7,7 @@ import ExtensionIdContext from "../contexts/ExtensionIdContext";
 import FilePreview from "./FilePreview";
 import FolderContentView from "./FolderContentView";
 
-import "./file-explorer.scss";
+import "./file-explorer.css";
 import SelectedFSNodeContext from "../contexts/SelectedFSNodeContext";
 
 type ExplorerProps = {

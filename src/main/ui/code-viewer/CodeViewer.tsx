@@ -4,7 +4,7 @@ import type { HighlightedCode } from "../../background";
 
 import { useEffect, useState } from "preact/hooks";
 import "prismjs/themes/prism-okaidia.css";
-import "./code-viewer.scss";
+import "./code-viewer.css";
 
 import wrappedWorker from "../../MainWorkerRef";
 import { showModalWindow } from "../modals/ModalWindow";

@@ -7,7 +7,7 @@ import wrappedWorker from "./MainWorkerRef";
 import ExtensionView from "./ui/extension/ExtensionView";
 import ExtensionSelector from "./ui/selector/ExtensionSelector";
 
-import "./ui/main.scss";
+import "./ui/main.css";
 import { modalRoot } from "./ui/modals/ModalWindow";
 
 declare const __VERSION__: string;

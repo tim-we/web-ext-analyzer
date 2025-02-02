@@ -1,8 +1,8 @@
-@import "./variables.scss";
+@import "./variables.css";
 
 .main-section {
   position: relative;
-  padding: $base-offset;
+  padding: var(--base-offset);
   background-color: rgb(48, 48, 48);
   box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.13);
   border: 1px solid rgb(60, 60, 60);
@@ -14,7 +14,7 @@
   }
 
   & > h2 {
-    margin-bottom: $base-offset;
+    margin-bottom: var(--base-offset);
   }
 
   summary {
@@ -31,11 +31,11 @@
 
   .buttons {
     position: absolute;
-    right: $base-offset;
-    top: $base-offset;
+    right: var(--base-offset);
+    top: var(--base-offset);
     display: flex;
     flex-direction: row;
-    gap: $base-offset;
+    gap: var(--base-offset);
 
     button {
       background-color: transparent;
@@ -61,5 +61,5 @@
 }
 
 details.main-section[open] > summary {
-  margin-bottom: $base-offset;
+  margin-bottom: var(--base-offset);
 }

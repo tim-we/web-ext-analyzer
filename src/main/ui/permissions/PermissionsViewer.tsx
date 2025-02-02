@@ -7,7 +7,7 @@ import { useEffect, useState } from "preact/hooks";
 import wrappedWorker from "../../MainWorkerRef";
 import Permission from "./Permission";
 
-import "./permissions.scss";
+import "./permissions.css";
 
 type ViewerProps = { extId: ExtensionId };
 

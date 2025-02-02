@@ -2,8 +2,8 @@ import type { FunctionComponent } from "preact";
 import { useId, useRef, useState } from "preact/hooks";
 
 import ActionButton from "../common/ActionButton";
-import "../main-section.scss";
-import "./selector.scss";
+import "../main-section.css";
+import "./selector.css";
 
 type ExtensionSourceId = "amo" | "cws" | "file";
 

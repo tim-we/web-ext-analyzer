@@ -1,11 +1,11 @@
-@import "../variables.scss";
+@import "../variables.css";
 
 .file-preview {
   position: relative;
   box-sizing: border-box;
   min-width: 250px;
   max-width: 45%;
-  padding: $base-offset;
+  padding: var(--base-offset);
 
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: $base-offset - 1px;
+    width: calc(var(--base-offset) - 1px);
 
     cursor: pointer;
     background-color: transparent;

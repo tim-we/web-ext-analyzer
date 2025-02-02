@@ -1,11 +1,11 @@
-@import "../variables.scss";
+@import "../variables.css";
 
 .extension-selection {
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $base-offset;
+    gap: var(--base-offset);
 
     select {
       margin: 0 1em;
@@ -34,7 +34,7 @@
     }
 
     a.browse:not([href]) {
-      visibility: hidden; // avoid layout shift
+      visibility: hidden; /* avoid layout shift */
     }
 
     button[type="submit"]::before {

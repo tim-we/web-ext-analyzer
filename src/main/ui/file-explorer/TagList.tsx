@@ -1,6 +1,6 @@
 import type { FunctionComponent } from "preact";
 
-import "./tag-list.scss";
+import "./tag-list.css";
 
 type TLProps = { tags: string[]; showAll?: boolean };
 

@@ -1,4 +1,4 @@
-@import "../variables.scss";
+@import "../variables.css";
 
 .extension {
   --color: rgb(182, 182, 182);
@@ -23,14 +23,14 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: $tile-gap;
+    gap: var(--tile-gap);
     justify-content: center;
-    margin: 0 auto; // center horizontally
-    margin-bottom: $tile-gap - $base-offset;
+    margin: 0 auto; /* center horizontally */
+    margin-bottom: calc(var(--tile-gap) - var(--base-offset));
     max-width: 100vw;
 
     @media (max-width: 1079px) {
-      width: 700px; // force wrapping after 2 tiles
+      width: 700px; /* force wrapping after 2 tiles */
     }
 
     .tile {

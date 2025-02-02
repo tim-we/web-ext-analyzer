@@ -6,7 +6,7 @@ import { type ModalWindowOptions, showModalWindow } from "../modals/ModalWindow"
 
 import { useContext, useState } from "preact/hooks";
 import ExtensionColorContext from "../contexts/ExtensionColorContext";
-import "./tiles.scss";
+import "./tiles.css";
 
 type Props = {
   title: string;
