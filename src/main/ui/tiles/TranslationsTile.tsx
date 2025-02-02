@@ -4,18 +4,23 @@ import Tile from "./Tile";
 
 const TranslationsTile: FunctionComponent<ExtensionData["translations"]> = ({
   languages,
-  strings
+  strings,
+  defaultLocale
 }) => (
   <Tile title="Translations" cssClass="translations" modal={createModalOptions}>
     <table>
       <tbody>
         <tr>
-          <td>{languages.length}</td>
+          <td class="count">{languages.length}</td>
           <td>Languages</td>
         </tr>
         <tr>
-          <td>{strings}</td>
+          <td class="count">{strings}</td>
           <td>Strings</td>
+        </tr>
+        <tr>
+          <td>{defaultLocale ?? "-"}</td>
+          <td>Default Locale</td>
         </tr>
       </tbody>
     </table>

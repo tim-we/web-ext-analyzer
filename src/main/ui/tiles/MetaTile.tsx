@@ -12,7 +12,7 @@ const MetaTile: FunctionComponent<ExtensionData["meta"]> = ({
   version,
   author,
   source,
-  locales
+  manifestVersion
 }) => {
   return (
     <Tile title="Meta" cssClass="meta" modal={createModalOptions}>
@@ -24,12 +24,12 @@ const MetaTile: FunctionComponent<ExtensionData["meta"]> = ({
           <span>{version}</span>
         </li>
         <li>
-          <span>{author ? "Author" : "Source"}</span>
-          <span>{author ?? sources[source]}</span>
+          <span>Manifest Version</span>
+          <span>{manifestVersion}</span>
         </li>
         <li>
-          <span>Locales</span>
-          <span>{locales}</span>
+          <span>{author ? "Author" : "Source"}</span>
+          <span>{author ?? sources[source]}</span>
         </li>
       </ul>
     </Tile>

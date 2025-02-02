@@ -83,8 +83,6 @@ export default class Extension {
       return false;
     })(manifest.background);
 
-    const locales = 1; // TODO
-
     return {
       id: this.id,
       downloadUrl: this.#objectURLs.get("download")!,
@@ -94,7 +92,7 @@ export default class Extension {
         icon: this.#objectURLs.get("icon"),
         source: "file", // FIXME
         author: this.#getAuthor(),
-        locales
+        manifestVersion: manifest.manifest_version
       },
       permissions: {
         required: manifest.permissions?.length ?? 0,
@@ -113,7 +111,8 @@ export default class Extension {
       },
       translations: {
         languages: [], // TODO
-        strings: 0
+        strings: 0, // TODO
+        defaultLocale: manifest.default_locale
       }
     };
   }

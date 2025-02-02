@@ -6,11 +6,11 @@ export type ExtensionData = {
     name: string;
     version: string;
     source: "amo" | "cws" | "file";
-    locales: number;
     author?: string;
     icon?: string;
     created?: string;
     lastUpdated?: string;
+    manifestVersion: 2 | 3;
   };
 
   permissions: {
@@ -36,5 +36,6 @@ export type ExtensionData = {
   translations: {
     languages: string[];
     strings: number;
+    defaultLocale?: string;
   };
 };
