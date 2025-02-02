@@ -59,14 +59,15 @@
     }
   }
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: " ";
     position: absolute;
     inset: 0;
     display: block;
     background-color: var(--color);
     width: 5px;
-    box-shadow: inset 0 0 1px rgba(0,0,0,0.4);
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.4);
   }
 
   &::before {

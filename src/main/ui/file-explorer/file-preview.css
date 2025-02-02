@@ -13,7 +13,7 @@
   justify-content: space-between;
 
   background-color: rgba(64, 64, 64, 0.8);
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   color: #fff;
 
   .properties {

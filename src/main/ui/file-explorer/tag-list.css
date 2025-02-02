@@ -9,7 +9,7 @@
     font-size: 0.8em;
     box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.085);
     color: rgb(225, 225, 225);
-    text-shadow: 0 0 2px rgba(10,10,10,0.25);
+    text-shadow: 0 0 2px rgba(10, 10, 10, 0.25);
     user-select: none;
 
     @media (max-width: 770px) {
