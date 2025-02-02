@@ -243,7 +243,7 @@ function isHostPermission(permission: string): boolean {
     return true;
   }
 
-  return /:\/\//.test(permission);
+  return /\:\/\//.test(permission);
 }
 
 export type PermissionsInfo = {
