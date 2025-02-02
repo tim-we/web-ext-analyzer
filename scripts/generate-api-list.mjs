@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import bcd from "@mdn/browser-compat-data" assert { type: "json" };
+import bcd from "@mdn/browser-compat-data" with { type: "json" };
 import { BlobReader, TextWriter, ZipReader } from "@zip.js/zip.js";
 import { globSync } from "glob";
 import { decode as htmlDecode } from "html-entities";

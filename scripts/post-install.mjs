@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import zipJs from "@zip.js/zip.js/package.json" assert { type: "json" };
+import zipJs from "@zip.js/zip.js/package.json" with { type: "json" };
 
 const zipJsModule = "./lib/zip-no-worker.js";
 
