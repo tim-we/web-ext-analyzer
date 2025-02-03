@@ -67,8 +67,8 @@
   &.translations {
     & table td:first-child {
       font-weight: bold;
-        text-align: right;
-        padding-right: 0.2em;
+      text-align: right;
+      padding-right: 0.2em;
     }
   }
 

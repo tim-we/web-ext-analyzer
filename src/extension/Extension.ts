@@ -3,7 +3,7 @@ import prettyBytes from "pretty-bytes";
 import Runner from "../runner/Runner";
 import createUniqueId from "../utilities/unique-id";
 import { createFileSystem } from "./FileSystem";
-import type { FSFolder } from "./FileSystem";
+import { FSFolder } from "./FileSystem";
 import type { ExtensionData } from "./types/ExtensionData";
 import type { Manifest } from "./types/Manifest";
 import type { Translations } from "./types/Translations";
@@ -83,6 +83,11 @@ export default class Extension {
       return false;
     })(manifest.background);
 
+    const locales = Array.from(this.files.getFolder("_locales")?.children?.values() ?? [])
+      .filter((node) => node instanceof FSFolder)
+      .filter((folder) => folder.getFile("messages.json", false))
+      .map((node) => node.name);
+
     return {
       id: this.id,
       downloadUrl: this.#objectURLs.get("download")!,
@@ -110,8 +115,8 @@ export default class Extension {
         jsType: Runner.supports(this) ? "classic" : undefined
       },
       translations: {
-        locales: [], // TODO
-        strings: 0, // TODO
+        locales: locales,
+        strings: Object.keys(this.#translations ?? {}).length, // TODO: count strings from all languages
         defaultLocale: manifest.default_locale
       }
     };
