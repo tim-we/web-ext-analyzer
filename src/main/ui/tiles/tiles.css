@@ -47,7 +47,7 @@
   &:focus,
   &:focus-visible {
     box-shadow: 0 0 0 2px white;
-    outline: 2x solid rgb(42, 182, 255);
+    outline: 2px solid rgb(42, 182, 255);
   }
 
   &:focus,
@@ -62,6 +62,16 @@
 }
 
 .tile {
+  &.permissions,
+  &.files,
+  &.translations {
+    & table td:first-child {
+      font-weight: bold;
+        text-align: right;
+        padding-right: 0.2em;
+    }
+  }
+
   &.meta > .content {
     flex-direction: row;
     justify-content: space-around;
@@ -107,12 +117,6 @@
     table {
       line-height: 2em;
       text-transform: uppercase;
-
-      td:first-child {
-        font-weight: bold;
-        text-align: right;
-        padding-right: 0.2em;
-      }
     }
   }
 
@@ -133,7 +137,6 @@
 
       td:first-child {
         font-size: 1.11em;
-        text-align: right;
         padding-right: 0.15em;
       }
     }

@@ -110,7 +110,7 @@ export default class Extension {
         jsType: Runner.supports(this) ? "classic" : undefined
       },
       translations: {
-        languages: [], // TODO
+        locales: [], // TODO
         strings: 0, // TODO
         defaultLocale: manifest.default_locale
       }

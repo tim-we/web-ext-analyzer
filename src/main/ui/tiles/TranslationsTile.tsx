@@ -3,7 +3,7 @@ import type { ExtensionData } from "../../../extension/types/ExtensionData";
 import Tile from "./Tile";
 
 const TranslationsTile: FunctionComponent<ExtensionData["translations"]> = ({
-  languages,
+  locales,
   strings,
   defaultLocale
 }) => (
@@ -11,8 +11,8 @@ const TranslationsTile: FunctionComponent<ExtensionData["translations"]> = ({
     <table>
       <tbody>
         <tr>
-          <td class="count">{languages.length}</td>
-          <td>Languages</td>
+          <td class="count">{locales.length}</td>
+          <td>Locales</td>
         </tr>
         <tr>
           <td class="count">{strings}</td>
@@ -31,7 +31,7 @@ export default TranslationsTile;
 
 function createModalOptions() {
   return {
-    title: "Meta Information",
+    title: "Translations",
     content: "Not yet implemented."
   };
 }
