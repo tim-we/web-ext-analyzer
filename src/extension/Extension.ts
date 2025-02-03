@@ -13,19 +13,21 @@ export default class Extension {
   readonly manifest: Readonly<Manifest>;
   readonly files: FSFolder;
   readonly #objectURLs = new Map<string, string>();
-  #translations: Translations | undefined;
+  #translations: Map<string, Translations> = new Map();
 
   private constructor(
     blob: Blob,
     root: FSFolder,
     manifest: Manifest,
-    translations?: Translations,
+    defaultTranslations?: Translations,
     icon?: string
   ) {
     this.id = createUniqueId();
     this.files = root;
     this.manifest = Object.freeze(manifest);
-    this.#translations = translations;
+    if (manifest.default_locale && defaultTranslations) {
+      this.#translations.set(manifest.default_locale, defaultTranslations);
+    }
     this.#objectURLs.set("download", URL.createObjectURL(blob));
     if (icon) {
       this.#objectURLs.set("icon", icon);
@@ -116,21 +118,32 @@ export default class Extension {
       },
       translations: {
         locales: locales,
-        strings: Object.keys(this.#translations ?? {}).length, // TODO: count strings from all languages
+        strings: Object.keys(this.#translations.get(manifest.default_locale ?? "") ?? {}).length, // TODO: count strings from all languages?
         defaultLocale: manifest.default_locale
       }
     };
   }
 
-  i18n(messageName: string, substitutions: string | string[] = []): string {
-    if (!this.#translations) {
+  i18n(
+    messageName: string,
+    options: Partial<{ substitutions: string | string[]; locale: string }> = {}
+  ): string {
+    const { substitutions = [], locale = this.manifest.default_locale } = options;
+
+    if (!locale) {
       return messageName;
     }
 
-    const translation = this.#translations[messageName];
+    const translations = this.#translations.get(locale);
+    if (!translations) {
+      return messageName;
+    }
+
+    const translation = translations[messageName];
 
     if (translation !== undefined) {
       if (substitutions.length > 0) {
+        // FIXME
         console.warn("Substitutions currently not supported.");
       }
       return translation.message;
@@ -177,8 +190,8 @@ export default class Extension {
     this.#objectURLs.forEach((url) => URL.revokeObjectURL(url));
   }
 
-  #__MSG_i18n(rawString: string): string {
-    if (!this.#translations) {
+  #__MSG_i18n(rawString: string, locale = this.manifest.default_locale): string {
+    if (!locale || !this.#translations.has(locale)) {
       return rawString;
     }
 
@@ -190,7 +203,7 @@ export default class Extension {
 
     const messageName = matches[1];
 
-    const translation = this.#translations[messageName];
+    const translation = this.#translations.get(locale)![messageName];
 
     if (translation !== undefined) {
       return translation.message;
